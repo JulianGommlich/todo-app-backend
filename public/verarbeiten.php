@@ -397,7 +397,7 @@
     return $ergebnis;
   }
 
-  function getOneItemsOfAList($listnummer, $id)
+  function getOneItemOfAList($listnummer, $id)
   /* 
     input: 
     -$id = INT(6) -> Primary Key of todoitem item

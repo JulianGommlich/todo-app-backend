@@ -24,6 +24,8 @@
   -getAllListsOfAUser($token)                       gets all ToDoList Items of an user
   -getAllItemsOFAUser($token)                       gets all ToDoListItems Items of an user
   -Login($benutzername, $passwort)                  check the login data and returns the token
+
+  -UserAnalysis($token)
   */
 
   function init()
@@ -709,6 +711,44 @@
         return NULL;
       }
     }
+  }
+
+  function user_analysis($token)
+    /*
+    args:
+    - $token = VARCHAR(120) NOT NULL
+
+    return:
+    - Array of Arrays
+      1. Done Items
+      2. Overdue Items
+    */
+  {
+    $user           = checkToken($token);
+    $items          = [];
+    $done_items     = [];
+    $overdue_items  = [];
+
+    if ($user != null){
+      $items = getAllListsOfAUser($token);
+
+      for($i=0; $i < sizeof($items); $i++){
+        if($items[$i][$i]["itemstate"] == "erledigt"){
+          array_push($done_items, $items[$i]);
+        }
+      }
+
+      for($i=0; $i < sizeof($items); $i++){
+        if($items[$i][$i]["dueDate"] < date("Y-m-d")){
+          array_push($overdue_items, $items[$i]);
+        }
+      }
+
+      array_push($analysis_array, $done_items);
+      array_push($analysis_array, $overdue_items);
+      return $analysis_array;
+    }
+    return null;
   }
 
   ?>

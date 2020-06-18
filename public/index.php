@@ -23,7 +23,6 @@ $app->get('/test/{arg}', function (Request $request, Response $response, $args) 
     $aargh = $request->getAttribute('arg');
     return (true) ? $response->getBody()->write("Test erfolgreich! " . $aargh) : $response->withStatus(401);
     //$response->getBody()->write("Test erfolgreich! " . $aargh);
-    return $response;
 });
 
 // 1. Nutzer
@@ -50,7 +49,7 @@ $app->get('/api/tasks', function (Request $request, Response $response, $args){
     $user = $request->getHeader('token');
 
     // 2. DB-Aufruf
-    $tasks = null;
+    $tasks = getAllItemsOfAUser($user);
     return ($tasks != null) ? $response->getBody()->write(json_encode($tasks)) : $response->withStatus(401);
 });
 
@@ -112,7 +111,7 @@ $app->put('/api/tasks/{taskId}', function(Request $request, Response $response, 
     $state          = $parsedBody['state'];
     $toDoList       = $parsedBody['toDoList'];
 
-    $task = changeToDoItem($taskId, $title, $description, $priority, $dueDate, $state, $user);
+    $task = changeToDoItem($taskId, $title, $description, $priority, $dueDate, $state, $toDoList, $user);
     return ($task != null) ? $response->getBody()->write(json_encode($task)) : $response->withStatus(401);
 });
 

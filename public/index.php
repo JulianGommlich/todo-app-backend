@@ -21,7 +21,8 @@ $app->setBasePath((function () {
 
 $app->get('/test/{arg}', function (Request $request, Response $response, $args) {
     $aargh = $request->getAttribute('arg');
-    return (true) ? $response->getBody()->write("Test erfolgreich! " . $aargh) : $response->withStatus(401);
+    $response->getBody()->write("Test erfolgreich! " . $aargh);
+    return (3 < 2) ? $response : $response->withStatus(401);
     //$response->getBody()->write("Test erfolgreich! " . $aargh);
 });
 
@@ -37,7 +38,8 @@ $app->post('/api/users', function (Request $request, Response $response, $args){
     $token = Login($nick, $pass);
     // Falsches Token -> "null"  (Tabelle leer -> Ausgabe leer ([]))
     // Invalide Daten -> Header = 401, Valide Daten -> Rückgabe: Token des Nutzers
-    return ($token != null) ? $response->getBody()->write(json_encode($token)) : $response->withStatus(401);
+    $response->getBody()->write(json_encode($token));
+    return ($token != null) ? $response : $response->withStatus(401);
 });
 
 
@@ -50,7 +52,8 @@ $app->get('/api/tasks', function (Request $request, Response $response, $args){
 
     // 2. DB-Aufruf
     $tasks = getAllItemsOfAUser($user);
-    return ($tasks != null) ? $response->getBody()->write(json_encode($tasks)) : $response->withStatus(401);
+    $response->getBody()->write(json_encode($tasks));
+    return ($tasks != null) ? $response : $response->withStatus(401);
 });
 
 // Alle Aufgaben einer Liste holen
@@ -63,7 +66,8 @@ $app->get('/api/lists/{listId}/tasks', function (Request $request, Response $res
 
     // 3. DB-Aufruf
     $tasks = getAllItemsOfAList($listId, $user);
-    return ($tasks != null) ? $response->getBody()->write(json_encode($tasks)) : $response->withStatus(401);
+    $response->getBody()->write(json_encode($tasks));
+    return ($tasks != null) ? $response : $response->withStatus(401);
 });
 
 // Eine Aufgabe einer Liste holen
@@ -74,7 +78,8 @@ $app->get('/api/lists/{listId}/tasks/{taskId}', function (Request $request, Resp
     $taskId = $request->getAttribute('taskId');
 
     $task = getOneItemOfAList($listId, $taskId, $user);
-    return ($task != null) ? $response->getBody()->write(json_encode($task)) : $response->withStatus(401);
+    $response->getBody()->write(json_encode($task));
+    return ($task != null) ? $response : $response->withStatus(401);
 });
 
 // 2.2 Erstellen
@@ -93,7 +98,8 @@ $app->post('/api/tasks', function(Request $request, Response $response, $args){
 
     // Objekt anlegen
     $task = createToDoItem($title, $toDoList, $description, $priority, $dueDate, $state, $user);
-    return ($task != null) ? $response->getBody()->write(json_encode($task)) : $response->withStatus(401);
+    $response->getBody()->write(json_encode($task));
+    return ($task != null) ? $response : $response->withStatus(401);
 });
 
 // 2.3 Anpassen
@@ -112,7 +118,8 @@ $app->put('/api/tasks/{taskId}', function(Request $request, Response $response, 
     $toDoList       = $parsedBody['toDoList'];
 
     $task = changeToDoItem($taskId, $title, $description, $priority, $dueDate, $state, $toDoList, $user);
-    return ($task != null) ? $response->getBody()->write(json_encode($task)) : $response->withStatus(401);
+    $response->getBody()->write(json_encode($task));
+    return ($task != null) ? $response : $response->withStatus(401);
 });
 
 // 2.4 Löschen
@@ -146,7 +153,8 @@ $app->get('/api/lists', function (Request $request, Response $response, $args){
     $user   = $request->getHeader('token');
 
     $lists  = getAllListsOfAUser($user);
-    return ($lists != null) ? $response->getBody()->write(json_encode($lists)) : $response->withStatus(401);
+    $response->getBody()->write(json_encode($lists));
+    return ($lists != null) ? $response : $response->withStatus(401);
 });
 
 // 3.2 Erstellen
@@ -157,7 +165,8 @@ $app->post('/api/lists', function(Request $request, Response $response, $args){
     $name           = $parsedBody['name'];
 
     $list = createToDoList($name, $user);
-    return ($list != null) ? $response->getBody()->write(json_encode($list)) : $response->withStatus(401);
+    $response->getBody()->write(json_encode($list));
+    return ($list != null) ? $response : $response->withStatus(401);
 });
 
 // 3.3

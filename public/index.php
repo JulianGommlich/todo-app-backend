@@ -19,6 +19,14 @@ $app->setBasePath((function () {
     return '';
 })());
 
+$app->add(function ($request, $handler) {
+    $response = $handler->handle($request);
+    return $response
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
+
 $app->get('/test/{arg}', function (Request $request, Response $response, $args) {
     $aargh = $request->getAttribute('arg');
     $response->getBody()->write("Test erfolgreich! " . $aargh);
@@ -185,6 +193,11 @@ $app->delete('/api/lists', function (Request $request, Response $response, $args
 
     $del = deleteAllToDoList($user);
     return ($del != null) ? $response : $response->withStatus(401);
+});
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
+    $handler = $this->notFoundHandler; // handle using the default Slim page not found handler
+    return $handler($req, $res);
 });
 
 $app->run();

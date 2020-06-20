@@ -38,7 +38,8 @@ $app->get('/test/{arg}', function (Request $request, Response $response, $args) 
 // Login
 $app->post('/api/users', function (Request $request, Response $response, $args){
     // 1. Body auslesen
-    $parsedBody = $request->getParsedBody();
+    $parsedBody = $request->getBody();
+    $parsedBody = (array) json_decode($parsedBody);
     $nick       = $parsedBody['username'];
     $pass       = $parsedBody['password'];
  

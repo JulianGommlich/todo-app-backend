@@ -159,9 +159,10 @@ $app->delete('/api//lists/{listId}/tasks/', function (Request $request, Response
 // 3.1 Auslesen
 // Alle Listen eines Nutzers holen
 $app->get('/api/lists', function (Request $request, Response $response, $args){
-    $user   = $request->getHeader('token');
+    $user = $request->getHeader('token');
+    $user = $user[0];
 
-    $lists  = getAllListsOfAUser($user);
+    $lists = getAllListsOfAUser($user);
     $response->getBody()->write(json_encode($lists));
     return ($lists != null) ? $response : $response->withStatus(401);
 });

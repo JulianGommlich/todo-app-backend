@@ -635,7 +635,7 @@
       $stmt = $mysqli->query($sql);
 
       for ($x = 0; $row = mysqli_fetch_assoc($stmt); $x++) {
-        $ergebnis[$x] =  array("id" => $row["id"], "name" => $row["listname"], "creator" => $row["creator"]);
+        $ergebnis[$x] =  array("id" => $row["id"], "listname" => $row["listname"], "creator" => $row["creator"]);
       }
       return $ergebnis;
     } else {

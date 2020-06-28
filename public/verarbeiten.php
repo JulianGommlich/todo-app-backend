@@ -636,6 +636,8 @@
 
       for ($x = 0; $row = mysqli_fetch_assoc($stmt); $x++) {
         $ergebnis[$x] =  array("id" => $row["id"]);
+        $ergebnis[$x] =  array("name" => $row["name"]);
+        $ergebnis[$x] =  array("creator" => $row["creator"]);
       }
       return $ergebnis;
     } else {

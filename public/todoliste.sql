@@ -69,9 +69,28 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `token`, `passwort`, `reg_date`) VALUES
-(1, 'Hierhammer', '4b3403665fea6', 'absolut', '2020-05-22 06:49:37'),
-(2, 'Haase', '4b3793665dxa8', 'streng', '2020-05-22 06:49:37'),
-(3, 'Gommlich', '4237d3665a5d8', 'geheim', '2020-05-22 06:49:37');
+(1, 'Picard', '4b3403665fea6', 'absolut', '2020-05-22 06:49:37'),
+(2, 'Kirk', '4b3793665dxa8', 'streng', '2020-05-22 06:49:37'),
+(3, 'Spock', '4237d3665a5d8', 'geheim', '2020-05-22 06:49:37');
+
+--
+-- Daten für Tabelle `todolist`
+--
+INSERT INTO `todolist` (`id`, `listname`, `creator`) VALUES
+(1, 'Eine erste Liste', 1),
+(2, 'Eine zweite Liste', 1);
+
+--
+-- Daten für Tabelle `todoitem`
+--
+INSERT INTO `todoitem` (`id`, `itemname`, `listnummer`, `itemdiscription`, `itempriority`, `dueDate`, `itemstate`) VALUES
+(1, 'Ein erstes Item', 1, 'Dies ist ein erstes Item', 5, '2020-07-22', 'offen'),
+(2, 'Ein zweites Item', 1, 'Dies ist ein zweites Item', 5, '', 'offen'),
+(3, 'Ein drittes Item', 1, 'Dies ist ein drittes Item', 5, '2020-05-22', 'verspätet erledigt'),
+(4, 'Erstes Item', 2, 'Dies ist ein erstes Item', 5, '', 'abgebrochen'),
+(5, 'Zweites Item', 2, 'Dies ist ein zweites Item', 5, '2020-08-22', 'offen'),
+(6, 'Drittes Item', 2, 'Dies ist ein drittes Item', 5, '2020-05-22', 'verspätet erledigt');
+
 
 --
 -- Indizes der exportierten Tabellen

@@ -56,44 +56,47 @@ $app->post('/api/users', function (Request $request, Response $response, $args){
 // Alle Aufgaben holen
 $app->get('/api/tasks', function (Request $request, Response $response, $args){
     // 1. Token aus Header auslesen
-    $user = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
 
     // 2. DB-Aufruf
-    $tasks = getAllItemsOfAUser($user);
+    $tasks          = getAllItemsOfAUser($user);
     $response->getBody()->write(json_encode($tasks));
+
     return ($tasks != null) ? $response : $response->withStatus(401);
 });
 
 // Alle Aufgaben einer Liste holen
 $app->get('/api/lists/{listId}/tasks', function (Request $request, Response $response, $args){
     // 1. Token aus Header auslesen
-    $user   = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
 
     // 2. Argument(e) aus URI auslesen
-    $listId = $request->getAttribute('listId');
+    $listId         = $request->getAttribute('listId');
 
     // 3. DB-Aufruf
     $tasks = getAllItemsOfAList($listId, $user);
     $response->getBody()->write(json_encode($tasks));
+
     return ($tasks != null) ? $response : $response->withStatus(401);
 });
 
 // Eine Aufgabe einer Liste holen
 $app->get('/api/lists/{listId}/tasks/{taskId}', function (Request $request, Response $response, $args){
-    $user   = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
 
     $listId = $request->getAttribute('listId');
     $taskId = $request->getAttribute('taskId');
 
     $task = getOneItemOfAList($listId, $taskId, $user);
     $response->getBody()->write(json_encode($task));
+
     return ($task != null) ? $response : $response->withStatus(401);
 });
 
 // 2.2 Erstellen
 // Erstellen einer Aufgabe
 $app->post('/api/tasks', function(Request $request, Response $response, $args){
-    $user          = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
 
     // Körper der Anfrage auslesen 
     $parsedBody     = json_decode((string)$request->getBody(), true);
@@ -107,13 +110,14 @@ $app->post('/api/tasks', function(Request $request, Response $response, $args){
     // Objekt anlegen
     $task = createToDoItem($title, $toDoList, $description, $priority, $dueDate, $state, $user);
     $response->getBody()->write(json_encode($task));
+
     return ($task != null) ? $response : $response->withStatus(401);
 });
 
 // 2.3 Anpassen
 // Anpassen einer Aufgabe
 $app->put('/api/tasks/{taskId}', function(Request $request, Response $response, $args){
-    $user           = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
 
     $taskId         = $request->getAttribute('taskId');
 
@@ -127,13 +131,14 @@ $app->put('/api/tasks/{taskId}', function(Request $request, Response $response, 
 
     $task = changeToDoItem($taskId, $title, $description, $priority, $dueDate, $state, $toDoList, $user);
     $response->getBody()->write(json_encode($task));
+    
     return ($task != null) ? $response : $response->withStatus(401);
 });
 
 // 2.4 Löschen
 // Löschen einer Aufgabe
 $app->delete('/api/tasks/{taskId}', function (Request $request, Response $response, $args){
-    $user           = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
     $taskId         = $request->getAttribute('taskId');
 
     $del = deleteToDoItem($taskId, $user);
@@ -144,7 +149,7 @@ $app->delete('/api/tasks/{taskId}', function (Request $request, Response $respon
 
 // Löschen aller Aufgaben einer Liste
 $app->delete('/api//lists/{listId}/tasks/', function (Request $request, Response $response, $args){
-    $user           = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
     $listId         = $request->getAttribute('listId');
 
     $del = deleteAllToDoItem($listId, $user);
@@ -158,31 +163,32 @@ $app->delete('/api//lists/{listId}/tasks/', function (Request $request, Response
 // 3.1 Auslesen
 // Alle Listen eines Nutzers holen
 $app->get('/api/lists', function (Request $request, Response $response, $args){
-    $user = $request->getHeader('token');
-    $user = $user[0];
+    $user           = $request->getHeader('token')[0];
 
-    $lists = getAllListsOfAUser($user);
+    $lists          = getAllListsOfAUser($user);
     $response->getBody()->write(json_encode($lists));
+
     return ($lists != null) ? $response : $response->withStatus(401);
 });
 
 // 3.2 Erstellen
 // Erstellen einer Liste
 $app->post('/api/lists', function(Request $request, Response $response, $args){
-    $user           = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
     $parsedBody     = json_decode((string)$request->getBody(), true);
     $name           = $parsedBody['name'];
 
     $list = createToDoList($name, $user);
     $response->getBody()->write(json_encode($list));
+
     return ($list != null) ? $response : $response->withStatus(401);
 });
 
 // 3.3
 // Löschen einer Liste
 $app->delete('/api/lists/{listId}', function (Request $request, Response $response, $args){
-    $user       = $request->getHeader('token');
-    $listId     = $request->getAttribute('listId');
+    $user           = $request->getHeader('token')[0];
+    $listId         = $request->getAttribute('listId');
 
     $del = deleteToDoList($listId, $user);
     return ($del != null) ? $response : $response->withStatus(401);
@@ -190,9 +196,10 @@ $app->delete('/api/lists/{listId}', function (Request $request, Response $respon
 
 // Löschen aller Listen
 $app->delete('/api/lists', function (Request $request, Response $response, $args){
-    $user = $request->getHeader('token');
+    $user           = $request->getHeader('token')[0];
 
-    $del = deleteAllToDoList($user);
+    $del            = deleteAllToDoList($user);
+    
     return ($del != null) ? $response : $response->withStatus(401);
 });
 

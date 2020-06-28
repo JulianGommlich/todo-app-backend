@@ -631,11 +631,11 @@
       if ($mysqli->connect_error) {
         die("Connection failed: " . $mysqli->connect_error);
       }
-      $sql = 'SELECT id FROM todolist WHERE creator = "' . $checked . '"';
+      $sql = 'SELECT * FROM todolist WHERE creator = "' . $checked . '"';
       $stmt = $mysqli->query($sql);
 
       for ($x = 0; $row = mysqli_fetch_assoc($stmt); $x++) {
-        $ergebnis[$x] =  array("id" => $row["id"], "listname" => $row["listname"], "creator" => $row["creator"]);
+        $ergebnis[$x] =  array("id" => $row["id"], "name" => $row["listname"], "creator" => $row["creator"]);
       }
       return $ergebnis;
     } else {

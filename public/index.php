@@ -38,8 +38,7 @@ $app->get('/test/{arg}', function (Request $request, Response $response, $args) 
 // Login
 $app->post('/api/users', function (Request $request, Response $response, $args){
     // 1. Body auslesen
-    $parsedBody = $request->getBody();
-    $parsedBody = (array) json_decode($parsedBody);
+    $parsedBody = json_decode((string)$request->getBody(), true);
     $nick       = $parsedBody['username'];
     $pass       = $parsedBody['password'];
  
@@ -97,7 +96,7 @@ $app->post('/api/tasks', function(Request $request, Response $response, $args){
     $user          = $request->getHeader('token');
 
     // Körper der Anfrage auslesen 
-    $parsedBody     = $request->getParsedBody();
+    $parsedBody     = json_decode((string)$request->getBody(), true);
     $title          = $parsedBody['title'];
     $description    = $parsedBody['description'];
     $priority       = $parsedBody['priority'];
@@ -118,7 +117,7 @@ $app->put('/api/tasks/{taskId}', function(Request $request, Response $response, 
 
     $taskId         = $request->getAttribute('taskId');
 
-    $parsedBody = json_decode((string)$request->getBody(), true);
+    $parsedBody     = json_decode((string)$request->getBody(), true);
     $title          = $parsedBody['title'];
     $description    = $parsedBody['description'];
     $priority       = $parsedBody['priority'];
@@ -171,7 +170,7 @@ $app->get('/api/lists', function (Request $request, Response $response, $args){
 // Erstellen einer Liste
 $app->post('/api/lists', function(Request $request, Response $response, $args){
     $user           = $request->getHeader('token');
-    $parsedBody     = $request->getParsedBody();
+    $parsedBody     = json_decode((string)$request->getBody(), true);
     $name           = $parsedBody['name'];
 
     $list = createToDoList($name, $user);

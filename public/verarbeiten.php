@@ -624,6 +624,7 @@
       $username = "root";
       $password = "";
       $dbname = "todoliste";
+      $ergebnis = [];
 
       // Create connection
       $mysqli = new mysqli($servername, $username, $password, $dbname);

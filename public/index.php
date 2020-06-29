@@ -203,5 +203,10 @@ $app->delete('/api/lists', function (Request $request, Response $response, $args
     return ($del != null) ? $response : $response->withStatus(401);
 });
 
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
+    $handler = $this->notFoundHandler; // handle using the default Slim page not found handler
+    return $handler($req, $res);
+});
+
 $app->run();
 ?>

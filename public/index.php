@@ -142,6 +142,7 @@ $app->delete('/api/tasks/{taskId}', function (Request $request, Response $respon
     $taskId         = $request->getAttribute('taskId');
 
     $del = deleteToDoItem($taskId, $user);
+    $response->getBody()->write(json_encode($del));
 
     // del = true -> 200 OK / del = null -> 401 Unauthorized
     return ($del != null) ? $response : $response->withStatus(401);
@@ -153,6 +154,7 @@ $app->delete('/api/lists/{listId}/tasks', function (Request $request, Response $
     $listId         = $request->getAttribute('listId');
 
     $del = deleteAllToDoItem($listId, $user);
+    $response->getBody()->write(json_encode($del));
 
     // del = true -> 200 OK / del = null -> 401 Unauthorized
     return ($del != null) ? $response : $response->withStatus(401);
@@ -199,6 +201,7 @@ $app->delete('/api/lists', function (Request $request, Response $response, $args
     $user           = $request->getHeader('token')[0];
 
     $del            = deleteAllToDoList($user);
+    $response->getBody()->write(json_encode($del));
     
     return ($del != null) ? $response : $response->withStatus(401);
 });

@@ -148,7 +148,7 @@ $app->delete('/api/tasks/{taskId}', function (Request $request, Response $respon
 });
 
 // Löschen aller Aufgaben einer Liste
-$app->delete('/api//lists/{listId}/tasks', function (Request $request, Response $response, $args){
+$app->delete('/api/lists/{listId}/tasks', function (Request $request, Response $response, $args){
     $user           = $request->getHeader('token')[0];
     $listId         = $request->getAttribute('listId');
 

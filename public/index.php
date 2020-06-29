@@ -187,6 +187,19 @@ $app->post('/api/lists', function(Request $request, Response $response, $args){
 });
 
 // 3.3
+// Ändern einer Liste
+$app->put('/api/lists', function(Request $request, Response $response, $args){
+    $user           = $request->getHeader('token')[0];
+    $parsedBody     = json_decode((string)$request->getBody(), true);
+    $name           = $parsedBody['name'];
+
+    $list = changeToDoList($name, $user);
+    $response->getBody()->write(json_encode($list));
+
+    return ($list != null) ? $response : $response->withStatus(401);
+});
+
+// 3.4
 // Löschen einer Liste
 $app->delete('/api/lists/{listId}', function (Request $request, Response $response, $args){
     $user           = $request->getHeader('token')[0];
@@ -194,7 +207,7 @@ $app->delete('/api/lists/{listId}', function (Request $request, Response $respon
 
     $del = deleteToDoList($listId, $user);
     $response->getBody()->write(json_encode($del));
-    
+
     return ($del != null) ? $response : $response->withStatus(401);
 });
 
@@ -206,11 +219,6 @@ $app->delete('/api/lists', function (Request $request, Response $response, $args
     $response->getBody()->write(json_encode($del));
 
     return ($del != null) ? $response : $response->withStatus(401);
-});
-
-$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
-    $handler = $this->notFoundHandler; // handle using the default Slim page not found handler
-    return $handler($req, $res);
 });
 
 $app->run();

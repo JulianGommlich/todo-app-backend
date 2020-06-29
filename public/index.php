@@ -193,6 +193,8 @@ $app->delete('/api/lists/{listId}', function (Request $request, Response $respon
     $listId         = $request->getAttribute('listId');
 
     $del = deleteToDoList($listId, $user);
+    $response->getBody()->write(json_encode($del));
+    
     return ($del != null) ? $response : $response->withStatus(401);
 });
 
@@ -202,7 +204,7 @@ $app->delete('/api/lists', function (Request $request, Response $response, $args
 
     $del            = deleteAllToDoList($user);
     $response->getBody()->write(json_encode($del));
-    
+
     return ($del != null) ? $response : $response->withStatus(401);
 });
 

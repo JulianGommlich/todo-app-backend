@@ -99,10 +99,10 @@ $app->post('/api/lists/{listId}/tasks', function(Request $request, Response $res
     $priority       = $parsedBody['priority'];
     $dueDate        = $parsedBody['dueDate'];
     $state          = $parsedBody['state'];
-    $toDoList       = $parsedBody['toDoList'];
+    $todoList       = $parsedBody['todoList'];
 
     // Objekt anlegen
-    $task = createToDoItem($title, $toDoList, $description, $priority, $dueDate, $state, $token);
+    $task = createToDoItem($title, $todoList, $description, $priority, $dueDate, $state, $token);
     $response->getBody()->write(json_encode($task));
 
     return checkToken($token) ? $response : $response->withStatus(401);
@@ -121,9 +121,9 @@ $app->put('/api/lists/{listId}/tasks/{taskId}', function(Request $request, Respo
     $priority       = $parsedBody['priority'];
     $dueDate        = $parsedBody['dueDate'];
     $state          = $parsedBody['state'];
-    $toDoList       = $parsedBody['toDoList'];
+    $todoList       = $parsedBody['todoList'];
 
-    $task = changeToDoItem($taskId, $title, $description, $priority, $dueDate, $state, $toDoList, $token);
+    $task = changeToDoItem($taskId, $title, $description, $priority, $dueDate, $state, $todoList, $token);
     $response->getBody()->write(json_encode($task));
     
     return checkToken($token) ? $response : $response->withStatus(401);

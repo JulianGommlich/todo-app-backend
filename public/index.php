@@ -89,7 +89,7 @@ $app->get('/api/lists/{listId}/tasks/{taskId}', function (Request $request, Resp
 
 // 2.2 Erstellen
 // Erstellen einer Aufgabe
-$app->post('/api/tasks', function(Request $request, Response $response, $args){
+$app->post('/api/lists/{listId}/tasks', function(Request $request, Response $response, $args){
     $token           = $request->getHeader('token')[0];
 
     // Körper der Anfrage auslesen 
@@ -110,7 +110,7 @@ $app->post('/api/tasks', function(Request $request, Response $response, $args){
 
 // 2.3 Anpassen
 // Anpassen einer Aufgabe
-$app->put('/api/tasks/{taskId}', function(Request $request, Response $response, $args){
+$app->put('/api/lists/{listId}/tasks/{taskId}', function(Request $request, Response $response, $args){
     $token           = $request->getHeader('token')[0];
 
     $taskId         = $request->getAttribute('taskId');
@@ -180,12 +180,15 @@ $app->post('/api/lists', function(Request $request, Response $response, $args){
 
 // 3.3
 // Ändern einer Liste
-$app->put('/api/lists', function(Request $request, Response $response, $args){
+$app->put('/api/lists/{listid}', function(Request $request, Response $response, $args){
     $token           = $request->getHeader('token')[0];
+
+    $listId         = $request->getAttribute('listId');
+
     $parsedBody     = json_decode((string)$request->getBody(), true);
     $name           = $parsedBody['name'];
 
-    $list = changeToDoList($name, $token);
+    $list = changeToDoList($listId, $name, $token);
     $response->getBody()->write(json_encode($list));
 
     return checkToken($token) ? $response : $response->withStatus(401);

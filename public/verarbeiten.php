@@ -451,6 +451,8 @@
     $password = "";
     $dbname = "todoliste";
 
+    $ergebnis = [];
+
     // Create connection
     $mysqli = new mysqli($servername, $username, $password, $dbname);
     // Check connection
@@ -484,6 +486,8 @@
     $username = "root";
     $password = "";
     $dbname = "todoliste";
+
+    $ergebnis = [];
 
     // Create connection
     $mysqli = new mysqli($servername, $username, $password, $dbname);
@@ -530,6 +534,8 @@
         $username = "root";
         $password = "";
         $dbname = "todoliste";
+
+        $ergebnis = [];
 
         // Create connection
         $mysqli = new mysqli($servername, $username, $password, $dbname);
@@ -583,6 +589,8 @@
         $password = "";
         $dbname = "todoliste";
 
+        $ergebnis = [];
+
         // Create connection
         $mysqli = new mysqli($servername, $username, $password, $dbname);
         // Check connection
@@ -624,6 +632,8 @@
       $username = "root";
       $password = "";
       $dbname = "todoliste";
+
+      $ergebnis = [];
 
       // Create connection
       $mysqli = new mysqli($servername, $username, $password, $dbname);

@@ -131,7 +131,7 @@ $app->put('/api/tasks/{taskId}', function(Request $request, Response $response, 
 
 // 2.4 Löschen
 // Löschen einer Aufgabe
-$app->delete('/api/tasks/{taskId}', function (Request $request, Response $response, $args){
+$app->delete('/api/lists/{listId}/tasks/{taskId}', function (Request $request, Response $response, $args){
     $token           = $request->getHeader('token')[0];
     $taskId         = $request->getAttribute('taskId');
 

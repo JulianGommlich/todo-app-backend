@@ -305,18 +305,7 @@
     return: NONE (in case of a wrong token) / TRUE
   */
   {
-    $count = 0;
-    $checked = getAllItemsOfAUser($token);
-
-    if ($checked != NULL) {
-      for ($x = 0; $x < count($checked); $x++) {
-        for ($y = 0; $y < count($checked[$x]); $y++) {
-          if ($checked[$x][$y]["id"] == $id) {
-            $count = $count + 1;
-          }
-        }
-      }
-      if ($count > 0) {
+      if (checkToken($token)) {
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -334,9 +323,6 @@
       } else {
         return NULL;
       }
-    } else {
-      return NULL;
-    }
   }
 
 

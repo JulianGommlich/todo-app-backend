@@ -367,7 +367,7 @@
       return NULL;
     }
   }
-  function changeToDoList($id, $listname, $creator, $token)
+  function changeToDoList($id, $listname, $token)
   /* 
     input: 
       -$id= INT(6) -> Primary Key of todolist item
@@ -383,8 +383,9 @@
     $checked = getAllListsOfAUser($token);
     if ($checked != NULL) {
       for ($x = 0; $x < count($checked); $x++) {
-        if ($checked[$x]['id'] == $id) {
+        if ($checked[$x]['id'] == (int)$id) {
           $count = $count + 1;
+          $creator = $checked[$x]['creator'];
         }
       }
       if ($count > 0) {
@@ -393,7 +394,7 @@
         $password = "";
         $dbname = "todoliste";
         $query7 = "UPDATE todolist 
-              SET listname =(?), creator =(?) 
+              SET listname = (?), creator = (?)
               WHERE id = (?)";
         $mysqli = new mysqli($servername, $username, $password, $dbname);
         if ($mysqli->connect_errno) {

@@ -84,12 +84,12 @@ INSERT INTO `todolist` (`id`, `listname`, `creator`) VALUES
 -- Daten für Tabelle `todoitem`
 --
 INSERT INTO `todoitem` (`id`, `itemname`, `listnummer`, `itemdiscription`, `itempriority`, `dueDate`, `itemstate`) VALUES
-(1, 'Ein erstes Item', 1, 'Dies ist ein erstes Item', 5, '2020-07-22', 'offen'),
-(2, 'Ein zweites Item', 1, 'Dies ist ein zweites Item', 5, '', 'offen'),
-(3, 'Ein drittes Item', 1, 'Dies ist ein drittes Item', 5, '2020-05-22', 'verspätet erledigt'),
-(4, 'Erstes Item', 2, 'Dies ist ein erstes Item', 5, '', 'abgebrochen'),
-(5, 'Zweites Item', 2, 'Dies ist ein zweites Item', 5, '2020-08-22', 'offen'),
-(6, 'Drittes Item', 2, 'Dies ist ein drittes Item', 5, '2020-05-22', 'verspätet erledigt');
+(1, 'Ein erstes Item', 1, 'Dies ist ein erstes Item', 1, '2020-07-22', 1),
+(2, 'Ein zweites Item', 1, 'Dies ist ein zweites Item', 3, '', 2),
+(3, 'Ein drittes Item', 1, 'Dies ist ein drittes Item', 5, '2020-05-22', 4),
+(4, 'Erstes Item', 2, 'Dies ist ein erstes Item', 2, '', 5),
+(5, 'Zweites Item', 2, 'Dies ist ein zweites Item', 5, '2020-08-22', 3),
+(6, 'Drittes Item', 2, 'Dies ist ein drittes Item', 1, '2020-05-22', 4);
 
 
 --

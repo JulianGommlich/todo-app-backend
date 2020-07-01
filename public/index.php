@@ -180,7 +180,7 @@ $app->post('/api/lists', function(Request $request, Response $response, $args){
 
 // 3.3
 // Ändern einer Liste
-$app->put('/api/lists/{listid}', function(Request $request, Response $response, $args){
+$app->put('/api/lists/{listId}', function(Request $request, Response $response, $args){
     $token           = $request->getHeader('token')[0];
 
     $listId         = $request->getAttribute('listId');

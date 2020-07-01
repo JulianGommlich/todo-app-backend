@@ -37,7 +37,7 @@ $app->post('/api/users', function (Request $request, Response $response, $args){
  
     // 2. DB Aufruf
     $token = Login($nick, $pass);
-    $response->getBody()->write(NULL);
+    $response->getBody()->write("NULL");
     
     // Falsches Token -> "null" 
     // Invalide Daten -> Header = 401, Valide Daten -> Rückgabe: Token des Nutzers

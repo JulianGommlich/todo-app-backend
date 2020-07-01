@@ -259,6 +259,7 @@
     -> "Beispielname" 
   */
   {
+    $ergebnis = [];
     $count = 0;
     $checked = getAllListsOfAUser($token);
     if ($checked != NULL) {

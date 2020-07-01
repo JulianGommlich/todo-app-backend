@@ -12,6 +12,7 @@
     $itemstate, $token):                            creates a new ToDoItem Item
   -deleteToDoItem($id, $listnummer, $token)         deletes a ToDoItem Item
   -deleteAllToDoItem($listnummer, $token)           deletes all ToDoItem Items of a list
+  -ChangeToDoList($id, $listname,$creator, $token)  changes a ToDoList Item
   -changeToDoItem($id, $itemname, $listnummer, 
    $itemdescription, $itempriority, 
    $dueDate, $itemstate, $token):                   changes a ToDoItem Item
@@ -366,7 +367,49 @@
       return NULL;
     }
   }
+  function changeToDoList($id, $listname, $creator, $token)
+  /* 
+    input: 
+      -$id= INT(6) -> Primary Key of todolist item
+      -$listname = VARCHAR(30) NOT NULL
+      -$creator = Foreign Key has to be the user.id, NOT NULL
+      -$token = VARCHAR(120) NOT NULL
+    output: changed todolist item
 
+    return: TRUE / NULL (in case of a wrong token)
+  */
+  {
+    $count = 0;
+    $checked = getAllListsOfAUser($token);
+    if ($checked != NULL) {
+      for ($x = 0; $x < count($checked); $x++) {
+        if ($checked[$x]['id'] == $id) {
+          $count = $count + 1;
+        }
+      }
+      if ($count > 0) {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "todoliste";
+        $query7 = "UPDATE todolist 
+              SET listname =(?), creator =(?) 
+              WHERE id = (?)";
+        $mysqli = new mysqli($servername, $username, $password, $dbname);
+        if ($mysqli->connect_errno) {
+          die('Verbindungsfehler (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+        }
+        $stmt = $mysqli->prepare($query7);
+        $stmt->bind_param("sss", $listname, $creator, $id);
+        $stmt->execute();
+        return TRUE;
+      } else {
+        return NULL;
+      }
+    } else {
+      return NULL;
+    }
+  }
   function changeToDoItem($id, $itemname, $itemdescription, $itempriority, $dueDate, $itemstate, $listid, $token)
   /* 
     input: 
